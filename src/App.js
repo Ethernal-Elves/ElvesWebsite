@@ -13,6 +13,7 @@ import Nav from "./Nav"
 import Footer from "./footer";
 import Intro from "./intro";
 import Whitelist from "./Whitelist.js";
+import {app, analytics} from "./initFirebase.js";
 
 
 const history = createBrowserHistory();
