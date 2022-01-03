@@ -1,27 +1,37 @@
+import React from 'react';
+import { useEffect, useMemo, useState } from "react";
 import {
     BrowserRouter as Router,
-  Link,
-  useLocation
+    Link,
+    useLocation
   } from "react-router-dom";
-import React from 'react';
-import { useEffect, useMemo } from "react";
-import { Button } from "react-bootstrap";
+  require('dotenv').config();
 
 function useQuery() {
-    const { search } = useLocation();
+const { search } = useLocation();
   
-    return useMemo(() => new URLSearchParams(search), [search]);
-  }
+return useMemo(() => new URLSearchParams(search), [search]);
+}
   
 const Whitelist = ({text, size}) => {
 
-    let query = useQuery();
-    let code = query.get("code");
+    const query = useQuery();
+    const code = query.get("code");
 
+    const dev = true;
+
+    const discordLink = dev ? "https://discord.com/api/oauth2/authorize?client_id=926731918790258708&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fwhitelist&response_type=code&scope=identify%20guilds%20guilds.members.read" :
+                              "https://discord.com/api/oauth2/authorize?client_id=926731918790258708&redirect_uri=https%3A%2F%2Fwww.ethernalelves.com%2Fwhitelist&response_type=code&scope=identify%20guilds%20guilds.members.read"
     
-    let clientId = "926731918790258708"
-    let clientSecret = "7OxmHzxwjrxF2nPmMqqdm_wProrNi-FP"
+    const redirectURI = dev ? "http://localhost:3000/whitelist" : "https://ethernalelves.com/whitelist"
 
+    const [discordName, setDiscordName] = useState("")
+    const [discordStatus, setDiscordStatus] = useState("")
+    const [discordRole, setDiscordRole] = useState("")
+
+    const clientId = "926731918790258708"
+    const clientSecret = process.env.REACT_APP_DISCORD_CLIENTSECRET
+                         
     useEffect(async () => {
         if(code){
             await getWL()
@@ -38,7 +48,7 @@ const getWL = async () => {
 					client_secret: clientSecret,
 					code,
 					grant_type: 'authorization_code',
-					redirect_uri: `http://localhost:3000/whitelist`,
+					redirect_uri: redirectURI,
 				}),
 				headers: {
 					'Content-Type': 'application/x-www-form-urlencoded',
@@ -46,20 +56,16 @@ const getWL = async () => {
 			});
 	
 			const oauthData = await oauthResult.json();
-//			https://discord.com/api/guilds/914739959271944233/roles
-// https://discord.com/api/users/@me/guilds
-//		https://discord.com/api/v8/guilds/914739959271944233/members/@me	
 
-///guilds/{guild.id}/members/{user.id}
-
-
-			const userResult = await fetch('https://discord.com/api/users/@me', {
+          	const userResult = await fetch('https://discord.com/api/users/@me', {
 				headers: {
 					authorization: `${oauthData.token_type} ${oauthData.access_token}`,
 				},
 			});
 
 			let userID = await userResult.json()
+
+            setDiscordName(userID.username)
 
 
 			const userGuildsResult = await fetch('https://discord.com/api/users/@me/guilds', {
@@ -72,7 +78,7 @@ const getWL = async () => {
 
 			for (const [key, value] of Object.entries(userGuilds)) {
 				if(value.id.toString() === "914739959271944233"){
-					console.log("Member is part of elves discord")
+					setDiscordStatus("User is member of the Ethernal Elves Guild. Fetching server roles...")
 				}			
 				
 			  }
@@ -98,23 +104,29 @@ const getWL = async () => {
 			}
 
 			let roleForMint
+            let roleForMintName
 		
 				  roleIds.map((roleid) => {
 
 					if(roleid === WLroles.whitelist){
-						roleForMint = "WL"
-					}else if(roleid === WLroles.ogwhitelist){
-						roleForMint = "OGWL"
-					}else if(roleid === WLroles.sentinel){
-						roleForMint = "SENTINEL"
+						roleForMintName = "Whitelist"
+                        roleForMint = 1
+					}
+                    if(roleid === WLroles.ogwhitelist){
+						roleForMintName = "OG Whitelist"
+                        roleForMint = 2
+					}
+                    if(roleid === WLroles.sentinel){
+						roleForMintName = "SENTINEL OG Whitelist"
+                        roleForMint = 3
 					}
 
 				  })
 
 			
 
-	
-			console.log(roleForMint);
+                  setDiscordRole(` User has ${roleForMintName} role.`)
+			
 			//console.log(userGuilds);
 
 			
@@ -138,11 +150,42 @@ const getWL = async () => {
     return (
     
         <>
-        <div>
-            lalalalal
-        </div>
 
-        <button variant="primary" href="https://discord.com/api/oauth2/authorize?client_id=926731918790258708&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fwhitelist&response_type=code&scope=identify%20guilds%20guilds.members.read">Primary</button>
+      
+
+        <h1>
+            Welcome {discordName}
+        </h1>
+
+        <p>
+        {discordStatus}
+        </p>
+        <p>
+        {discordRole}
+        </p>
+
+        <button variant="primary" 
+        onClick={(e) => {
+            e.preventDefault();
+            window.location.href=discordLink;
+            }}
+        >Authenticate with Discord</button>
+
+<br></br>
+<br></br>
+<br></br>
+
+<p>
+    Click on the button below to get your whitelist spot. Clicking the button will trigger a transaction in the Ethernal Elves WL Contract. 
+    Your discord role and wallet address will be recorded.
+</p>
+<button variant="primary" 
+        onClick={(e) => {
+            e.preventDefault();
+            window.location.href=discordLink;
+            }}
+        >Reserve your spot on the WL</button>
+        
         </>         
       );
     };
