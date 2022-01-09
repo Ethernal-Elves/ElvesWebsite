@@ -13,12 +13,12 @@ const Footer = () => {
                        
                                 <div class="">     
                                 <div>
-                                <ul class="inline-flex space-x-5 list-outside pl-0">
+                               {/* <ul class="inline-flex space-x-5 list-outside pl-0">
                                     <li><a href="https://etherscan.io/address/#code">Verified Contract</a></li>
                                     <li><a href="https://opensea.io/collection/ethernal-elves">Open Sea</a></li>
                                     <li><a href="https://docs.google.com/">WP</a></li>
                                          
-                                </ul>
+                            </ul>*/}
                                 <div class="pt-3">
                                     &copy; {currentYear}
                                     {" "}

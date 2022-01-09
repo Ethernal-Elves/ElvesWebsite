@@ -58,9 +58,9 @@ const CodeContest = ({text, size}) => {
     const dev = false;
 
     const discordLink = dev ? "https://discord.com/api/oauth2/authorize?client_id=926731918790258708&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fwhitelist&response_type=code&scope=identify%20guilds%20guilds.members.read" :
-                              "https://discord.com/api/oauth2/authorize?client_id=926731918790258708&redirect_uri=https%3A%2F%2Fwww.ethernalelves.com%2Fwhitelist&response_type=code&scope=identify%20guilds%20guilds.members.read"
+                              "https://discord.com/api/oauth2/authorize?client_id=926731918790258708&redirect_uri=https%3A%2F%2Fethernal-elves-website.vercel.app%2Fwhitelist&response_type=code&scope=identify%20guilds%20guilds.members.read%20guilds.join"
     
-    const redirectURI = dev ? "http://localhost:3000/whitelist" : "https://ethernalelves.com/whitelist"
+    const redirectURI = dev ? "http://localhost:3000/whitelist" : "https://ethernal-elves-website.vercel.app/whitelist"
 
 
 
