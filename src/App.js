@@ -13,6 +13,7 @@ import Nav from "./Nav"
 import Footer from "./footer";
 import Intro from "./intro";
 import Whitelist from "./Whitelist.js";
+import CodeContest from "./Codecontent.js";
 import {app, analytics} from "./initFirebase.js";
 
 
@@ -66,13 +67,15 @@ function App() {
              
                     
 
-                <Route path="/whitelist/">   
-                <Whitelist />        
+                <Route path="/whitelist/">
+                <CodeContest  />   
+                {/*<Whitelist />        */}
                 </Route>
 
      
                 <Route path="/">   
-                <Intro />           
+                <Intro />       
+              
                 </Route>
          
 

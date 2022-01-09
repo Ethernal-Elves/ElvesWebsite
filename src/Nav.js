@@ -18,10 +18,8 @@ const Nav = () => {
 						</div>
 				
 						<div class="hidden md:flex items-center space-x-1 font-bold">                        
-							<a href="/play" class="no-underline	py-4 px-2 text-gray-500 hover:text-green-500 transition duration-300">ABOUT ETHERNAL ELVES</a>
-						
-						
-							<a href="/whitelist" class="no-underline py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300">WHITELIST</a>
+							<a href="/" class="no-underline	py-4 px-2 text-gray-500 hover:text-green-500 transition duration-300">ABOUT ETHERNAL ELVES</a>
+							{/*<a href="/whitelist" class="no-underline py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300">WHITELIST</a>*/}
 							
                            
 						</div>
