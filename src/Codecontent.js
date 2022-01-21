@@ -7,6 +7,7 @@ import {
   } from "react-router-dom";
 import Title from './Title';
 import { useMoralis } from "react-moralis";
+import { CSVLink } from "react-csv";
 require('dotenv').config();
 
 var hash = require('hash.js')
@@ -17,6 +18,8 @@ const { search } = useLocation();
   
 return useMemo(() => new URLSearchParams(search), [search]);
 }
+
+
   
 const CodeContest = ({text, size}) => {
 
@@ -25,6 +28,42 @@ const CodeContest = ({text, size}) => {
     const [discordStatus, setDiscordStatus] = useState("")
     const [discordRole, setDiscordRole] = useState("")
 	const [solution, setSolution] = useState("")
+
+	const [csvReport, setCsvReport] = useState([1,2,3])
+
+	const getData = async () => {
+		const Dalgona = Moralis.Object.extend("Dalgona");
+		const query = new Moralis.Query(Dalgona);
+		query.notEqualTo("discordName", "husky");
+
+		const results = await query.find();
+
+		const headers = [
+			{ label: "discordName", key: "discordName" },
+			{ label: "discordRole", key: "discordRole" },
+			{ label: "codeLink", key: "codeLink" },
+			{ label: "createdAt", key: "createdAt" }]
+
+		alert("Successfully retrieved " + results.length + " monsters.");
+		let arrObj = []
+// Do something with the returned Moralis.Object values
+			for (let i = 0; i < results.length; i++) {
+			const object = results[i];
+			arrObj.push({discordName: object.get('discordName'),
+							discordRole: object.get('discordRole'),
+							codeLink: object.get('codeLink'),
+							createdAt: object.createdAt})
+						}
+			
+
+				let csv = {data: arrObj,
+				headers: headers,
+				filename: 'Report.csv'}
+				setCsvReport(csv) 
+				console.log(csv)
+
+				}
+
 
 	const submitEntry = async (e) => {
 
@@ -68,6 +107,7 @@ const CodeContest = ({text, size}) => {
     const clientSecret = process.env.REACT_APP_DISCORD_CLIENTSECRET
                          
     useEffect(async () => {
+		getData()
         if(code){
             await getWL()
         }
@@ -229,7 +269,7 @@ const getWL = async () => {
         >Submit Entry</button>
 }
 
-
+<CSVLink {...csvReport}>Export to CSV</CSVLink>
         </>         
       );
     };

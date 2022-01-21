@@ -96,15 +96,60 @@ const getWL = async () => {
 				if(value.id.toString() === "914739959271944233"){
 					setDiscordStatus("User is member of the Ethernal Elves Guild. Fetching server roles...")
 				}			
-			}
+				
+			  }
 
-			const {address} = await getCurrentWalletConnected()
-			const params =  {wallet: address, oauthData: oauthData}
+			  const guildsRoles = await fetch('https://discord.com/api/users/@me/guilds/914739959271944233/member', {
+				headers: {
+					authorization: `${oauthData.token_type} ${oauthData.access_token}`,
+				},
+			});
+
+			let guildRoles = await guildsRoles.json()
+
+			let roleIds = guildRoles.roles
+
+			//let roleSentinelOg = "923088191353937940"
+			//let roleOGWl = "923088235465437205"
+			//let roleWl = "923088451887304704"
+
+			const params =  {address: wallet, role:discordRoleIndex, oauthData: oauthData}
 			const response = await Moralis.Cloud.run("signMessage", params);
 
 			console.log(response)
+			
+			const WLroles = {
+				"sentinel"    : "923088191353937940",
+				"whitelist"   : "923088451887304704",
+				"ogwhitelist" : "923088235465437205"
+			}
 
-			setDiscordRole(` User has ${response.r.name} role.`)
+			let roleForMint
+            let roleForMintName
+		
+				  roleIds.map((roleid) => {
+
+					if(roleid === WLroles.whitelist){
+						roleForMintName = "Whitelist"
+                        roleForMint = 1
+					}
+                    if(roleid === WLroles.ogwhitelist){
+						roleForMintName = "OG Whitelist"
+                        roleForMint = 2
+					}
+                    if(roleid === WLroles.sentinel){
+						roleForMintName = "SENTINEL OG Whitelist"
+                        roleForMint = 3
+					}
+
+				  })
+
+			
+
+                  setDiscordRole(` User has ${roleForMintName} role.`)
+				  setDiscordRoleIndex(roleForMint)
+			
+			//console.log(userGuilds);
 
 			
 		} catch (error) {
