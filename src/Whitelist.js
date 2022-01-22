@@ -96,19 +96,23 @@ return loaded ? (
         <>
         {/* I'm not Sullof. No easter eggs here*/}
         <p>
-            <Title text={`WELCOME ${discordMeta.name}`} />, you have been declared worthy by the Head of Sentinels. You are on the whitelist with the role {discordMeta.roleName}</p>
+            <Title text={`WELCOME ${discordMeta.name}`} />, you have been declared worthy by the Head of Sentinels. You are on the whitelist with the role <Title text={discordMeta.roleName} /></p>
         <div class="break-all">
-            <Title text="SIGNATURE" /> 
-            <p>{discordMeta.signature}</p>
+        <p>Signature:{" "}
+            <Title text={discordMeta.signature} /> 
+        </p>
         </div>
         <div class="break-all">
-            <Title text="ROLE INDEX" /> 
-            <p>{discordMeta.roleIndex}</p>
+        <p>Role Index:{" "}
+            <Title text={discordMeta.roleIndex} /> 
+        </p>
         </div>
         <div class="break-all">
-            <Title text="WALLET" /> 
-            <p>{discordMeta.wallet}</p>
+        <p>Wallet:{" "}
+            <Title text={discordMeta.wallet} /> 
+        </p>
         </div>
+       
         <br />
         <p>Keep these details safe, you will need them to mint your Sentinel Elf.</p>
         </>         
