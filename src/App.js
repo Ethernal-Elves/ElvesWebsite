@@ -6,7 +6,7 @@ import {
   Route,
   useRouteMatch
 } from "react-router-dom";
-import {getContract, getCurrentWalletConnected} from "./utils/interact.js";
+import {getCurrentWalletConnected} from "./utils/interact.js";
 
 import { Helmet } from "react-helmet";
 import Nav from "./Nav"
@@ -21,7 +21,7 @@ const history = createBrowserHistory();
 
 function App() {
   
-  const {nftContract} = getContract()
+
   const [wallet, setWallet] = useState("")
   const [flip, setFlip] = useState(false)
   
