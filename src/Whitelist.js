@@ -15,7 +15,7 @@ const { search } = useLocation();
 return useMemo(() => new URLSearchParams(search), [search]);
 }
   
-const Whitelist = ({text, size}) => {
+const Whitelist = () => {
 	
 	const dev = false;
     const query = useQuery();
@@ -25,7 +25,7 @@ const Whitelist = ({text, size}) => {
 
 
     const discordLink = dev ? "https://discord.com/api/oauth2/authorize?client_id=926731918790258708&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fwhitelist&response_type=code&scope=identify%20guilds%20guilds.members.read" :
-                              "https://discord.com/api/oauth2/authorize?client_id=926731918790258708&redirect_uri=https%3A%2F%2Fwww.ethernalelves.com%2Fwhitelist&response_type=code&scope=identify%20guilds%20guilds.members.read"
+                              "https://discord.com/api/oauth2/authorize?client_id=926731918790258708&redirect_uri=https%3A%2F%2Fethernalelves.com%2Fwhitelist&response_type=code&scope=identify%20guilds%20guilds.members.read"
     
     const redirectURI = dev ? "http://localhost:3000/whitelist" : "https://ethernalelves.com/whitelist"
 
@@ -61,36 +61,20 @@ const getWL = async () => {
 	
 			const oauthData = await oauthResult.json();
 
-          	const userResult = await fetch('https://discord.com/api/users/@me', {
-				headers: {
-					authorization: `${oauthData.token_type} ${oauthData.access_token}`,
-				},
-			});
-
-			let userID = await userResult.json()
-
-            const userGuildsResult = await fetch('https://discord.com/api/users/@me/guilds', {
-				headers: {
-					authorization: `${oauthData.token_type} ${oauthData.access_token}`,
-				},
-			});
-
-			let userGuilds = await userGuildsResult.json()
-
-			for (const [key, value] of Object.entries(userGuilds)) {
-				if(value.id.toString() === "914739959271944233"){
-					setDiscordStatus("User is member of the Ethernal Elves Guild. Fetching server roles...")
-				}			
-			}
-
-			const {address} = await getCurrentWalletConnected()
+           
+            const {address} = await getCurrentWalletConnected()
 			const params =  {wallet: address, oauthData: oauthData}
 			const response = await Moralis.Cloud.run("signMessage", params);
 
             console.log(response)
 
-            setDiscordMeta({name: userID.username, server: userGuilds[0].name, roleIndex: response.r, roleName: response.n, signature: response.s, wallet: response.w})
-			
+            setDiscordMeta({
+                            name: response.username, 
+                            roleIndex: response.r, 
+                            roleName: response.n, 
+                            signature: response.s, 
+                            wallet: response.w})
+
 
 			
 		} catch (error) {
