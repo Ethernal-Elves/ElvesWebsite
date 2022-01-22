@@ -17,22 +17,20 @@ return useMemo(() => new URLSearchParams(search), [search]);
   
 const Whitelist = ({text, size}) => {
 	
-	const dev = true;
+	const dev = false;
     const query = useQuery();
     const code = query.get("code");
 	
 	const { Moralis} = useMoralis();
-	const [wallet, setWallet] = useState("")
+
 
     const discordLink = dev ? "https://discord.com/api/oauth2/authorize?client_id=926731918790258708&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fwhitelist&response_type=code&scope=identify%20guilds%20guilds.members.read" :
                               "https://discord.com/api/oauth2/authorize?client_id=926731918790258708&redirect_uri=https%3A%2F%2Fwww.ethernalelves.com%2Fwhitelist&response_type=code&scope=identify%20guilds%20guilds.members.read"
     
     const redirectURI = dev ? "http://localhost:3000/whitelist" : "https://ethernalelves.com/whitelist"
 
-    const [discordName, setDiscordName] = useState("")
+    const [discordMeta, setDiscordMeta] = useState({name: null, server: null, roleIndex: null, roleName: null})
     const [discordStatus, setDiscordStatus] = useState("")
-    const [discordRole, setDiscordRole] = useState("")
-	const [discordRoleIndex, setDiscordRoleIndex] = useState()
 
     const clientId = "926731918790258708"
     const clientSecret = process.env.REACT_APP_DISCORD_CLIENTSECRET
@@ -43,16 +41,6 @@ const Whitelist = ({text, size}) => {
             await getWL()
         }
     }, [code])
-
-
-	useEffect(async() => {
-		const {address} = await getCurrentWalletConnected()
-		setWallet(address)
-
-	
-	  }, [])
-
-
 
 const getWL = async () => {
     if (code) {
@@ -81,10 +69,7 @@ const getWL = async () => {
 
 			let userID = await userResult.json()
 
-            setDiscordName(userID.username)
-
-
-			const userGuildsResult = await fetch('https://discord.com/api/users/@me/guilds', {
+            const userGuildsResult = await fetch('https://discord.com/api/users/@me/guilds', {
 				headers: {
 					authorization: `${oauthData.token_type} ${oauthData.access_token}`,
 				},
@@ -102,9 +87,10 @@ const getWL = async () => {
 			const params =  {wallet: address, oauthData: oauthData}
 			const response = await Moralis.Cloud.run("signMessage", params);
 
-			console.log(response)
+            console.log(response)
 
-			setDiscordRole(` User has ${response.r.name} role.`)
+            setDiscordMeta({name: userID.username, server: userGuilds[0].name, roleIndex: response.r, roleName: response.n, signature: response.s, wallet: response.w})
+			
 
 			
 		} catch (error) {
@@ -117,51 +103,32 @@ const getWL = async () => {
 }
 	
 
-
-
-
-    ///https://discord.com/api/oauth2/authorize?client_id=926731918790258708&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fwhitelist&response_type=code&scope=identify%20guilds%20guilds.members.read
-   
-
-    
-    return (
+return (
     
         <>
-
-      
-
         <h1>
-            Welcome {discordName}
+            Welcome {discordMeta.name}
         </h1>
 		
-        <p>
-        {discordStatus}
-        </p>
-        <p>
-        {discordRole}
-        </p>
+        <p>{discordStatus}</p>
+        <p>Your role:{discordMeta.roleName}</p>
+        <p>Your custom signature:{discordMeta.signature}</p>
+        <p>Your role Index:{discordMeta.roleIndex}</p>
+        <p>Your role wallet:{discordMeta.wallet}</p>
+     
 
         <button variant="primary" 
         onClick={(e) => {
             e.preventDefault();
             window.location.href=discordLink;
             }}
-        >Authenticate with Discord</button>
+        >Authenticate with Discord. Make sure you'r wallet is connected first.</button>
 
-<br></br>
-<br></br>
-<br></br>
 
 <p>
-    Click on the button below to get your whitelist spot. Clicking the button will trigger a transaction in the Ethernal Elves WL Contract. 
-    Your discord role and wallet address will be recorded.
+    Click on the button below to get your whitelist spot. 
 </p>
-<button variant="primary" 
-        onClick={(e) => {
-            e.preventDefault();
-            window.location.href=discordLink;
-            }}
-        >Reserve your spot on the WL</button>
+
         
         </>         
       );
