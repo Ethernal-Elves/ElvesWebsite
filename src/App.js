@@ -69,7 +69,7 @@ function App() {
 
                 <Route path="/whitelist/">
                 <Whitelist /> 
-                {/* <CodeContest  />        */}
+                {/*<CodeContest  />       */}
                 </Route>
 
      

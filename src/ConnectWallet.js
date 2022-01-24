@@ -92,7 +92,7 @@ const isMetaMaskInstalled = async () => {
       variant="light"
       onClick={(e) => {
         e.preventDefault();
-        window.location.href='https://metamask.app.link/dapp/hilarioushuskies.life/';
+        window.location.href='https://metamask.app.link/dapp/ethernalelves.com/whitelist';
         }}
   >Get Metamask</Button>
 
