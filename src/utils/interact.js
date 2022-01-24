@@ -85,7 +85,7 @@ export const connectWallet = async () => {
             <p>
               {" "}
               🦊{" "}
-              <a rel="noreferrer" target="_blank" href={`https://metamask.app.link/dapp/hilarioushuskies.life/`}>
+              <a rel="noreferrer" target="_blank" href={`https://metamask.app.link/dapp/ethernalelves.com/whitelist/`}>
                 You must install Metamask, a virtual Ethereum wallet, in your
                 browser.
               </a>
@@ -127,7 +127,7 @@ export const connectWallet = async () => {
             <p>
               {" "}
               🦊{" "}
-              <a rel="noreferrer" target="_blank" href={`https://metamask.app.link/dapp/hilarioushuskies.life/`}>
+              <a rel="noreferrer" target="_blank" href={`https://metamask.app.link/dapp/ethernalelves.com/whitelist`}>
                 You must install Metamask, a virtual Ethereum wallet, in your
                 browser.
               </a>
