@@ -18,10 +18,34 @@ const CodeContest = ({text, size}) => {
 	const [loading, setLoading] = useState(true)
 
 	const getData = async () => {
+		console.log("yo")
 		const ElvesWhiteList = Moralis.Object.extend("ElvesWhitelist");
 		const query = new Moralis.Query(ElvesWhiteList);
-		
-		const results = await query.find();
+		let limit = 100
+
+		//page through the results
+		let results = []
+		let hasMore = true
+		let page = 1
+		while (hasMore) {
+
+			query.limit(limit);
+			query.skip(limit * (page - 1));
+			query.withCount();
+			const response = await query.find();
+			let currentIndex = limit * (page)
+			currentIndex > response.count ? hasMore = false : hasMore = true
+			page++
+			
+			console.log(hasMore, response)
+			results = results.concat(response.results)
+			
+		}
+
+
+
+
+		//const results = await query.find();
 
 		const headers = [
 			{ label: "createdAt", key: "createdAt" },
