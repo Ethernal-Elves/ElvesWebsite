@@ -42,9 +42,6 @@ const CodeContest = ({text, size}) => {
 			
 		}
 
-
-
-
 		//const results = await query.find();
 
 		const headers = [
