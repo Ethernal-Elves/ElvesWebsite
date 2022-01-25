@@ -64,7 +64,10 @@ function App() {
       <div class="container mx-auto"> 
 
               <Switch>
+              <Route path="/beff/">
              
+                <CodeContest  />     
+                </Route>
                     
 
                 <Route path="/whitelist/">
