@@ -551,16 +551,11 @@ const [accessoriesImgOne, setAccessoriesImgOne] = useState(null)
 const [accessoriesImgTwo, setAccessoriesImgTwo] = useState(null)  
 
 const [showImage, setShowImage] = useState(false)  
+const [showMetaImage, setShowMetaImage] = useState(false)  
 
 const [tokenURIImage, setTOKENURIImage] = useState(null)
 const [elfObject, setElfObject] = useState(null)
 
-
-useEffect(() => {
-
-  getMeta()
-
-}, [])
 
 const getMeta = async () => {
 
@@ -577,6 +572,7 @@ let elfJson
   }
 
   console.log(elfJson)
+  setShowMetaImage(true)
 
 }
 
@@ -644,17 +640,21 @@ return (
       <div class="w-1/2">
      
       <div class="w-2/3 p-10 justify-between">
+      {showMetaImage &&
+      <>
       <p>{elfObject.name}</p>
       <img src={tokenURIImage} class="w-full h-64" />
       <p class="pt-4 text-xs">{elfObject.description}</p>
       <GetAttributes elfData={elfObject} />     
       <br/>
-      <button onClick={getMeta}>Get Meta</button>
+      </>}
+      
       </div>
       </div>
       <div class="w-1/2">
         <p>Enter TOKEN URI Metadata here</p>
-      <textarea value={textAreaSample} onChange={(e) => setTextArea(e.target.value)} id="text" style={{color: "black", width: "100%", height: "300px"}} />
+      <textarea value={textAreaSample} onChange={(e) => setTextArea(e.target.value)} id="text" style={{color: "black", width: "100%", height: "600px"}} />
+      <button onClick={getMeta}>Get Meta</button>
       </div>
       
       </div>
@@ -665,7 +665,7 @@ return (
       <div class="w-1/2">
 
       {showImage &&  
-      <div style={{imageRendering: "pixelated"}} class="p2">
+      <div class="mb-10" style={{imageRendering: "pixelated"}} class="p2">
 
           <svg id="elf" width={500} height={500} version="1.1" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
             {parseInt(race) !== 0 &&  <image x="1" y="1" width="160" height="160" imageRendering="pixelated" preserveAspectRatio="xMidYMid" xlinkHref={`data:image/png;base64,${raceImg}`}/>}
