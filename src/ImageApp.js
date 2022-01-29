@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import React, { useCallback, useRef } from 'react';
 import { toPng } from 'html-to-image';
+import { token1, token2, token3, token5, token6, token7, token8, token9, Token11, Token13, Token14, Token15, Token16, Token17, Token18  } from "./data";
 
 function ImageApp() {
 
@@ -555,6 +556,25 @@ const [showMetaImage, setShowMetaImage] = useState(false)
 
 const [tokenURIImage, setTOKENURIImage] = useState(null)
 const [elfObject, setElfObject] = useState(null)
+const [counter, setCounter] = useState(0)
+
+
+
+const tokenArray = [token1, token2, token3, token5, token6, token7, token8, token9, Token11, Token13, Token14, Token15, Token16, Token17, Token18]
+
+const updateTextArea = () => {
+
+  let _counter = counter + 1
+
+  if(counter > tokenArray.length - 1) {
+    _counter = 0
+  }
+
+  setTextArea(tokenArray[counter])
+  setCounter(_counter)
+
+}
+
 
 
 const getMeta = async () => {
@@ -631,6 +651,7 @@ function GetAttributes({elfData}) {
 
 
 
+
 return (
     <div class="p-10" style={{background: "#111111"}}>
 
@@ -654,7 +675,8 @@ return (
       <div class="w-1/2">
         <p>Enter TOKEN URI Metadata here</p>
       <textarea value={textAreaSample} onChange={(e) => setTextArea(e.target.value)} id="text" style={{color: "black", width: "100%", height: "600px"}} />
-      <button onClick={getMeta}>Get Meta</button>
+      <button onClick={getMeta}>Get Meta</button>{"  "}
+      <button onClick={updateTextArea}>Next</button>
       </div>
       
       </div>
