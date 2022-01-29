@@ -545,6 +545,8 @@ const [weaponsImg, setWeaponsImg] = useState(null)
 const [accessoriesImgOne, setAccessoriesImgOne] = useState(null)  
 const [accessoriesImgTwo, setAccessoriesImgTwo] = useState(null)  
 
+const [showImage, setShowImage] = useState(false)  
+
 
 
 
@@ -575,6 +577,8 @@ data.inventory.map(elf => {
   
   })
 
+  setShowImage(true)
+
 }
   
 
@@ -591,18 +595,20 @@ return (
 
       <div class="flex flex-wrap gap-10" >
       <div>
+
+      {showImage &&  
       <div style={{imageRendering: "pixelated"}} class="p2">
 
           <svg id="elf" width={500} height={500} version="1.1" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
-              <image x="1" y="1" width="160" height="160" imageRendering="pixelated" preserveAspectRatio="xMidYMid" xlinkHref={`data:image/png;base64,${raceImg}`}/>
-              <image x="1" y="1" width="160" height="160" imageRendering="pixelated" preserveAspectRatio="xMidYMid" xlinkHref={`data:image/png;base64,${accessoriesImgOne}`}/>
-              <image x="1" y="1" width="160" height="160" imageRendering="pixelated" preserveAspectRatio="xMidYMid" xlinkHref={`data:image/png;base64,${hairImg}`}/>
-              <image x="1" y="1" width="160" height="160" imageRendering="pixelated" preserveAspectRatio="xMidYMid" xlinkHref={`data:image/png;base64,${weaponsImg}`}/>
-              <image x="1" y="1" width="160" height="160" imageRendering="pixelated" preserveAspectRatio="xMidYMid" xlinkHref={`data:image/png;base64,${accessoriesImgTwo}`}/>
+            {parseInt(race) !== 0 &&  <image x="1" y="1" width="160" height="160" imageRendering="pixelated" preserveAspectRatio="xMidYMid" xlinkHref={`data:image/png;base64,${raceImg}`}/>}
+            {parseInt(accessoriesImgOne) !== 0 && <image x="1" y="1" width="160" height="160" imageRendering="pixelated" preserveAspectRatio="xMidYMid" xlinkHref={`data:image/png;base64,${accessoriesImgOne}`}/>}
+            {parseInt(hair) !== 0 && <image x="1" y="1" width="160" height="160" imageRendering="pixelated" preserveAspectRatio="xMidYMid" xlinkHref={`data:image/png;base64,${hairImg}`}/>}
+            {parseInt(weapons) !== 0 && <image x="1" y="1" width="160" height="160" imageRendering="pixelated" preserveAspectRatio="xMidYMid" xlinkHref={`data:image/png;base64,${weaponsImg}`}/>}
+            {parseInt(accessoriesImgTwo) !== 0 && <image x="1" y="1" width="160" height="160" imageRendering="pixelated" preserveAspectRatio="xMidYMid" xlinkHref={`data:image/png;base64,${accessoriesImgTwo}`}/>}
           </svg>
 
 
-          </div>
+          </div>}
 
 
     <button onClick={() => {
