@@ -20,7 +20,9 @@ return useMemo(() => new URLSearchParams(search), [search]);
   
 const Whitelist = () => {
 	
-	const dev = true;
+	const dev = false;
+
+    
     const query = useQuery();
     const code = query.get("code");
     const [loading, setLoading] = useState(false)
