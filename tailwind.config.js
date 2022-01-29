@@ -4,10 +4,10 @@ module.exports = {
   theme: {
     extend: {
         fontFamily: {
-            sans: ['Iskara', 'sans-serif'],
-            serif: ['MedievalSharp', 'cursive'],
-            display: ["'Press Start 2P'", 'cursive'],
-            body: ["'Press Start 2P'", 'cursive'],            
+            sans: ['Montserrat', 'sans-serif'],
+            serif: ['Montserrat', 'cursive'],
+            display: ["'Montserrat'", 'cursive'],
+            body: ["'Montserrat'", 'cursive'],            
         }
     },
     textIndent: { // defaults to {}

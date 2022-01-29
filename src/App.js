@@ -15,6 +15,7 @@ import Intro from "./intro";
 import Whitelist from "./Whitelist.js";
 import CodeContest from "./Codecontent.js";
 import {app, analytics} from "./initFirebase.js";
+import ImageApp from "./ImageApp.js";
 
 
 const history = createBrowserHistory();
@@ -65,7 +66,7 @@ function App() {
 
               <Switch>
               <Route path="/beff/">
-             
+                <ImageApp />
                 <CodeContest  />     
                 </Route>
                     

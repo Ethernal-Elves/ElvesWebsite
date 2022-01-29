@@ -2,7 +2,7 @@ import React from 'react';
 import Title from "./Title"
 import { useEffect, useMemo, useState } from "react";
 import { useMoralis } from "react-moralis";
-import {getContract, getCurrentWalletConnected} from "./utils/interact.js";
+import {getCurrentWalletConnected} from "./utils/interact.js";
 import {
     BrowserRouter as Router,
     Link,
@@ -20,9 +20,10 @@ return useMemo(() => new URLSearchParams(search), [search]);
   
 const Whitelist = () => {
 	
-	const dev = false;
+	const dev = true;
     const query = useQuery();
     const code = query.get("code");
+    const [loading, setLoading] = useState(false)
 	
 	const { Moralis} = useMoralis();
 
@@ -34,6 +35,7 @@ const Whitelist = () => {
 
     const [discordMeta, setDiscordMeta] = useState({name: null, server: null, roleIndex: null, roleName: null})
     const [loaded, setLoaded] = useState(false)
+    const [errorMsg, setErrorMsg] = useState(false)
 
     const clientId = "926731918790258708"
     const clientSecret = process.env.REACT_APP_DISCORD_CLIENTSECRET
@@ -47,8 +49,13 @@ const Whitelist = () => {
 
 const getWL = async () => {
     if (code) {
+        setLoading(true)
 		try {
-			const oauthResult = await fetch('https://discord.com/api/oauth2/token', {
+
+            let oauthResult
+
+            try{
+                oauthResult = await fetch('https://discord.com/api/oauth2/token', {
 				method: 'POST',
 				body: new URLSearchParams({
 					client_id: clientId,
@@ -58,16 +65,40 @@ const getWL = async () => {
 					redirect_uri: redirectURI,
 				}),
 				headers: {
-					'Content-Type': 'application/x-www-form-urlencoded',
+					'Content-Type': 'application/x-www-form-urlencoded'
 				},
 			});
+            }catch(e){
+                console.log(e)
+                console.log("Error getting oauth token, trying proxy")
+                oauthResult = await fetch('https://cors-proxy.huskies.workers.dev/corsproxy/?apiurl=https://discord.com/api/oauth2/token', {
+                    method: 'POST',
+                    body: new URLSearchParams({
+                        client_id: clientId,
+                        client_secret: clientSecret,
+                        code,
+                        grant_type: 'authorization_code',
+                        redirect_uri: redirectURI,
+                    }),
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                });
+
+            }
+			
 	
-			const oauthData = await oauthResult.json();
+			const oauthData = oauthResult ? await oauthResult.json() : "error"
 
            
             const {address} = await getCurrentWalletConnected()
 			const params =  {wallet: address, oauthData: oauthData}
-			const response = await Moralis.Cloud.run("signMessage", params);
+			let response 
+            
+            if(params){
+                response = await Moralis.Cloud.run("signMessage", params);
+            } 
 
             console.log(response)
 
@@ -77,14 +108,17 @@ const getWL = async () => {
                             roleName: response.n, 
                             signature: response.s, 
                             wallet: response.w})
-            setLoaded(true)                
 
+                            console.log(loaded)
+           response && setLoaded(true)                
+           setLoading(false)
 
 			
 		} catch (error) {
 			// NOTE: An unauthorized token will not throw an error;
 			// it will return a 401 Unauthorized response in the try block above
 			console.error(error);
+            setErrorMsg("Error. Please screenshot browser console and submit ticket on discord.")
 		}
 	}
 
@@ -93,42 +127,52 @@ const getWL = async () => {
  
 return loaded ? (
     
-        <>
+        <div class="bg-black p-5">
         {/* I'm not Sullof. No easter eggs here*/}
         <p>
-            <Title text={`WELCOME ${discordMeta.name}`} />, you have been declared worthy by the Head of Sentinels. You are on the whitelist with the role <Title text={discordMeta.roleName} /></p>
-        <div class="break-all">
-        <p>Signature:{" "}
-            <Title text={discordMeta.signature} /> 
-        </p>
-        </div>
+            <Title text={`WELCOME ${discordMeta.name}`} /> <br/><br/>Our time is here. You are on the whitelist with the role <Title text={discordMeta.roleName} /></p>
+        
+        <div class="border-2 p-3">
+        <div>Mint Credentials</div>
+
         <div class="break-all">
         <p>Role Index:{" "}
-            <Title text={discordMeta.roleIndex} /> 
+            <b>{discordMeta.roleIndex} </b> 
         </p>
         </div>
+        
+        <div class="break-all">
+        <p>Signature:{" "}
+           <b>{discordMeta.signature}</b>
+        </p>
+        </div>
+    
         <div class="break-all">
         <p>Wallet:{" "}
-            <Title text={discordMeta.wallet} /> 
+            <b>{discordMeta.wallet} </b> 
         </p>
+        </div>
         </div>
        
         <br />
-        <p>Keep these details safe, you will need them to mint your Sentinel Elf.</p>
-        </>         
+        <p>Use these details to mint your whitelist allocation by clicking <a href={`https://app.ethernalelves.com/mint?wl=${discordMeta.roleIndex}&signature=${discordMeta.signature}&address=${discordMeta.wallet}`} rel={'noreferrer'} target={"_blank"}> here</a></p>
+        <p>Pro tip: copy and paste these values as they are here into the mint GUI or the contract</p>
+        
+        </ div>         
       ) : (
           <>
+          {errorMsg ? <p class="text-xl">{errorMsg}</p> : null}
           <p>
             Click on the button below to get your whitelist access credentials. You will need these to mint.  
         </p>
               <p>1. Connect Wallet <ConnectWallet /> </p>
               <br></br>
-              <p>2. Authenticate with discord <button variant="primary" 
+              <p>2. Get your signature <button variant="primary" 
         onClick={(e) => {
             e.preventDefault();
             window.location.href=discordLink;
             }}
-        >Authenticate</button></p>
+        >Authenticate with Discord</button></p>
 
 
 

@@ -1,7 +1,7 @@
 const Title = ({text, size}) => {
    
-const style = {fontFamily: '"Press Start 2P",cursive',
-color: '#ff0',
+const style = {fontFamily: "Montserrat",
+color: '#FFFFFF',
 textShadow: '3px 3px red'
 }
 
