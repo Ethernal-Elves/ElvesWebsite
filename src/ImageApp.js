@@ -667,7 +667,7 @@ return (
       {showImage &&  
       <div class="mb-10" style={{imageRendering: "pixelated"}} class="p2">
 
-          <svg id="elf" width={500} height={500} version="1.1" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+          <svg id="elf" width={600} height={600} version="1.1" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
             {parseInt(race) !== 0 &&  <image x="1" y="1" width="160" height="160" imageRendering="pixelated" preserveAspectRatio="xMidYMid" xlinkHref={`data:image/png;base64,${raceImg}`}/>}
             {parseInt(accessoriesImgOne) !== 0 && <image x="1" y="1" width="160" height="160" imageRendering="pixelated" preserveAspectRatio="xMidYMid" xlinkHref={`data:image/png;base64,${accessoriesImgOne}`}/>}
             {parseInt(hair) !== 0 && <image x="1" y="1" width="160" height="160" imageRendering="pixelated" preserveAspectRatio="xMidYMid" xlinkHref={`data:image/png;base64,${hairImg}`}/>}
