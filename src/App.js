@@ -12,12 +12,9 @@ import { Helmet } from "react-helmet";
 import Nav from "./Nav"
 import Footer from "./footer";
 import Intro from "./intro";
-import Whitelist from "./Whitelist.js";
-import CodeContest from "./Codecontent.js";
 import {app, analytics} from "./initFirebase.js";
 import ImageApp from "./ImageApp.js";
-import MintPass from "./MintPass.js";
-import AddToWhitelist from "./AddToWhitelist.js";
+
 
 
 const history = createBrowserHistory();
@@ -75,8 +72,8 @@ function App() {
                     
 
                 <Route path="/whitelist/">
-                <Whitelist /> 
-                {/*<CodeContest  />       */}
+                
+                {/*<CodeContest  />    <Whitelist />    */}
                 </Route>
 
      
