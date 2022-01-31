@@ -16,13 +16,14 @@ const Footer = () => {
                                <ul class="inline-flex space-x-5 list-outside pl-0">
                                     <li><a href="hhttps://etherscan.io/address/0xA351B769A01B445C04AA1b8E6275e03ec05C1E75#code">Verified Contract</a></li>
                                     <li><a href="https://opensea.io/collection/ethernalelves">Open Sea</a></li>
-                                    <li><a href="https://docs.google.com/">WP</a></li>
+                                    <li><a href="https://drive.google.com/file/d/1-zpCKyPiCpJycyslBVQIoZXhXBxqJ3cZ/view">WP</a></li>
+                                    <li><a href="https://drive.google.com/file/d/1j3guFoR8ygBNP7-4ipX4N07-mg63FEck/view">Game Guide</a></li>
                                          
                             </ul>
                                 <div class="pt-3">
                                     &copy; {currentYear}
                                     {" "}
-                                 Ethernal Elves | {" "}All rights reserved. Use at your own risk.
+                                 Ethernal Elves | {" "}All rights reserved. Use at Dapp your own risk.
                           
                                 </div>
                                 

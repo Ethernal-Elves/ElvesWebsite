@@ -5,7 +5,7 @@ const Background = ( { children } ) =>
 {
     return (
        
-        <body style={{background: "#111111", backgroundImage: `url(${background})`, backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat"}}>
+        <body style={{background: "#111111"}}>
       
             {children}
         </body>
