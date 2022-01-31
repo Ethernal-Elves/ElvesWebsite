@@ -13,12 +13,12 @@ const Footer = () => {
                        
                                 <div class="">     
                                 <div>
-                               {/* <ul class="inline-flex space-x-5 list-outside pl-0">
-                                    <li><a href="https://etherscan.io/address/#code">Verified Contract</a></li>
-                                    <li><a href="https://opensea.io/collection/ethernal-elves">Open Sea</a></li>
+                               <ul class="inline-flex space-x-5 list-outside pl-0">
+                                    <li><a href="hhttps://etherscan.io/address/0xA351B769A01B445C04AA1b8E6275e03ec05C1E75#code">Verified Contract</a></li>
+                                    <li><a href="https://opensea.io/collection/ethernalelves">Open Sea</a></li>
                                     <li><a href="https://docs.google.com/">WP</a></li>
                                          
-                            </ul>*/}
+                            </ul>
                                 <div class="pt-3">
                                     &copy; {currentYear}
                                     {" "}
@@ -35,7 +35,7 @@ const Footer = () => {
                          <div>
 
 
-                                
+                       
                  
                             
                         </div>
