@@ -14,6 +14,7 @@ import Footer from "./footer";
 import Intro from "./intro";
 import {app, analytics} from "./initFirebase.js";
 import ImageApp from "./ImageApp.js";
+import Verify from "./Verify.js";
 
 
 
@@ -72,7 +73,7 @@ function App() {
                     
 
                 <Route path="/whitelist/">
-                
+                <Verify />
                 {/*<CodeContest  />    <Whitelist />    */}
                 </Route>
 
