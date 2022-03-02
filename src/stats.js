@@ -5,7 +5,7 @@ import {getRENTokenSupply} from "./utils/interact"
 
 export const sentinelClass = ["Druid", "Assassin", "Ranger"] 
 
-export const actionString = ["unstaked", "staked", "campaign", "passive mode", "idle", "re-rolled weapon", "re-rolled item", "healing", "polygon", "bloodthirst", "synergize"]
+export const actionString = ["unstaked", "staked", "campaign", "passive mode", "idle", "re-rolled weapon", "re-rolled item", "healing", "polygon", "synergize", "bloodthirst"]
 
 const Stats = () => {
 
@@ -23,6 +23,7 @@ const [ownerCount, setOwnerCount] = useState(0);
 const [ownerTable, setOwnerTable] = useState([]);
 const [levelDistribution, setLevelDistribution] = useState([]);
 const [actionDistribution, setActionDistribution] = useState([]);
+const [inPolygon, setInPolygon] = useState([]);
 const [staked, setStaked] = useState([]);
 const [contractRen, setContractRen] = useState([]);
 const [polyContractRen, setPolyContractRen] = useState([]);
@@ -40,6 +41,8 @@ useEffect(() => {
     let actions = await Moralis.Cloud.run("getActions")
     let polyactions = await Moralis.Cloud.run("getPolyActions")
     let staked = await Moralis.Cloud.run("getStaked")
+
+    console.log(polyactions, "POLYYY")
 
     let renSupplyValue = await getRENTokenSupply()
     setRenSupply(renSupplyValue/1e18)
@@ -95,13 +98,79 @@ useEffect(() => {
                 tokenCount += levels[i].tokens 
             }
         }
+        levelTiers.push(tokenCount)
+
+        let comboActions = actions.concat(polyactions)
+
+        console.log(comboActions, "COMBO")
+
+        let actionUnstaked = 0
+        let actionStaked = 0
+        let actionCampaign = 0
+        let actionPassive = 0
+        let actionIdle = 0
+        let actionRerollWeapon = 0
+        let actionRerollItem = 0
+        let actionHealing = 0
+        let actionPolygon = 0
+        let actionBloodthirst = 0
+        let actionSynergize = 0
+
+
+        comboActions.map(action => {
+
+            let actionIndex = parseInt(action.objectId)
+
+            if(actionIndex === 0) {
+                actionUnstaked += action.tokens
+
+            }
+            if(actionIndex === 1) {
+                actionStaked += action.tokens
+            }
+            if(actionIndex === 2) {
+                actionCampaign += action.tokens
+            }
+            if(actionIndex === 3) {
+                actionPassive += action.tokens
+            }
+            if(actionIndex === 4) {
+                actionIdle += action.tokens
+            }
+            if(actionIndex === 5) {
+                actionRerollWeapon += action.tokens
+            }
+            if(actionIndex === 6) {
+                actionRerollItem += action.tokens
+            }
+            if(actionIndex === 7) {
+                actionHealing += action.tokens
+            }
+            if(actionIndex === 8) {
+                actionPolygon += action.tokens
+            }
+            if(actionIndex === 9) {
+                actionBloodthirst += action.tokens
+            }
+            if(actionIndex === 10) {
+                actionSynergize += action.tokens
+            }
+
+        })
+
+        let actionArray = [{objectId: 0, tokens: actionUnstaked}, {objectId: 2, tokens: actionCampaign}, {objectId: 3, tokens: actionPassive}, {objectId: 4, tokens: actionIdle}, {objectId: 5, tokens: actionRerollWeapon}, {objectId: 6, tokens: actionRerollItem}, {objectId: 7, tokens: actionHealing}, {objectId: 9, tokens: actionBloodthirst}, {objectId: 10, tokens: actionSynergize}]
+        
+
+  
+        setActionDistribution(actionArray)
+        setInPolygon(actionPolygon)
 
         setLevelDistribution(levelTiers)
         setOwnerCount(ownerCount.length)
-        setActionDistribution(actions)
         setStaked(staked)
         setContractRen(contractRen)
         setPolyContractRen(polyContractRen)
+       
     
     setLoading(false);
 
@@ -119,9 +188,13 @@ useEffect(() => {
 
 return (
 <>
-<h3>HODLERS: {ownerCount && ownerCount}</h3>      
 
-<h3>Staked in gameplay</h3>
+<h3>Gameplay Statistics</h3>
+
+<div className="flex text-sm">Individual Holders {ownerCount && ownerCount} </div>
+<div className="flex text-sm">Sentinels On L2: {inPolygon && inPolygon} </div>
+
+
 
         {staked && staked.map((campaign, index) => {
                         
@@ -166,14 +239,14 @@ let issued
 
              
 
-<h3>Action Distribution</h3>
+<h3>Current Activity</h3>
              {actionDistribution && actionDistribution.map((level, index) => {
-               const percentage = level.tokens / 6666 * 100
-               const text = actionString[parseInt(level.objectId)]
+                     const text = actionString[parseInt(level.objectId)]
                                return (
                   <div key={index} className="flex">
-                    <div>{text}: {level.tokens} : {percentage.toFixed(0)} %</div>
+                    <div>{text}: {level.tokens} </div>
                    </div> )})}
+
 
 <h3>Level distribution</h3>
              {levelDistribution && levelDistribution.map((level, index) => {
@@ -190,5 +263,6 @@ let issued
 };
 
 export default Stats;
+
 
 
