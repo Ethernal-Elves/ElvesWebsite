@@ -10,7 +10,9 @@ require('dotenv').config();
 
 const appId = process.env.REACT_APP_MORALIS_APPKEY;
 
-const creds = {appId: appId, serverUrl: "https://btx7uykjbmv4.usemoralis.com:2053/server"};
+//const creds = {appId: appId, serverUrl: "https://btx7uykjbmv4.usemoralis.com:2053/server"};
+
+const creds = {appId: "pkIG80bKDzQ6scPI3xvnfxUXeOfw2OnmR6F1WnaA", serverUrl: "https://8vjltfmbhcn7.usemoralis.com:2053/server"}; //Mainnet
 
 ReactDOM.render(
   <MoralisProvider appId={creds.appId} serverUrl={creds.serverUrl}>

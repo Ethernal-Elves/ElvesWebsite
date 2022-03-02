@@ -15,6 +15,7 @@ import Intro from "./intro";
 import {app, analytics} from "./initFirebase.js";
 import ImageApp from "./ImageApp.js";
 import Verify from "./Verify.js";
+import Stats from "./stats.js";
 
 
 
@@ -22,23 +23,6 @@ const history = createBrowserHistory();
 
 function App() {
   
-
-  const [wallet, setWallet] = useState("")
-  const [flip, setFlip] = useState(false)
-  
-
-  let husky ="0xCcB6D1e4ACec2373077Cb4A6151b1506F873a1a5"
-  let beff = "0x3296D61C5E737F9847bA52267b1DeBB8Dbff139F"
-  let adminWallet = [husky.toLowerCase(), beff.toLowerCase()]
-
-  useEffect(async() => {
-    const {address} = await getCurrentWalletConnected()
-    setWallet(address)
-    if(adminWallet.includes(address.toLowerCase())){
-      setFlip(true)
-    }
-
-  }, [])
 
   
  return (
@@ -59,15 +43,13 @@ function App() {
   <div class="container mx-auto p-3">
     <div class="max-w-screen-xl mx-auto"> 
 
-
   <Router history={history}>
     <div class="min-h-screen"> 
       <div class="container mx-auto"> 
 
               <Switch>
               <Route path="/beff/">
-                <ImageApp />
-    
+                <ImageApp />    
     
                 </Route>
                     
@@ -79,7 +61,8 @@ function App() {
 
      
                 <Route path="/">   
-                <Intro />       
+                <Intro />    
+                <Stats />   
               
                 </Route>
          
