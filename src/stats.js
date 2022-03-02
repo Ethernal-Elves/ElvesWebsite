@@ -3,24 +3,16 @@ import { useMoralis } from "react-moralis";
 import {getRENTokenSupply} from "./utils/interact"
 
 
-export const sentinelClass = ["Druid", "Assassin", "Ranger"] 
 
-export const actionString = ["unstaked", "staked", "campaign", "passive mode", "idle", "re-rolled weapon", "re-rolled item", "healing", "polygon", "synergize", "bloodthirst"]
+const actionString = ["unstaked", "staked", "campaign", "passive mode", "idle", "re-rolled weapon", "re-rolled item", "healing", "polygon", "synergize", "bloodthirst"]
 
 const Stats = () => {
 
 const [loading, setLoading] = useState(true);
 
-const [gameStatus, setGameStatus] = useState(0);
-
 const { Moralis } = useMoralis();
-const [max, setMax] = useState(0);
-const [tokenSupply, setTokenSupply] = useState(0);
-const [init, setInit] = useState(0);
-const [currentPrice, setCurrentPrice] = useState(0);
 const [renSupply, setRenSupply] = useState(0);
 const [ownerCount, setOwnerCount] = useState(0);
-const [ownerTable, setOwnerTable] = useState([]);
 const [levelDistribution, setLevelDistribution] = useState([]);
 const [actionDistribution, setActionDistribution] = useState([]);
 const [inPolygon, setInPolygon] = useState([]);
