@@ -20,7 +20,7 @@ const [staked, setStaked] = useState([]);
 const [contractRen, setContractRen] = useState([]);
 const [polyContractRen, setPolyContractRen] = useState([]);
 
-
+//Ren Supply {!loading && renSupply.toFixed()}
 
 useEffect(() => {
     async function init() {
@@ -36,8 +36,8 @@ useEffect(() => {
 
     console.log(polyactions, "POLYYY")
 
-    let renSupplyValue = await getRENTokenSupply()
-    setRenSupply(renSupplyValue/1e18)
+   // let renSupplyValue = await getRENTokenSupply()
+    //setRenSupply(renSupplyValue/1e18)
 
     //121763124399999999990894 
     
@@ -203,7 +203,7 @@ return (
 
 <h3>$REN & CREDITS In Circulation</h3>
 <div className="flex text-sm">
-Ren Supply {!loading && renSupply.toFixed()}
+
 </div>
 {!loading && contractRen.map((ren, index) => {
 
