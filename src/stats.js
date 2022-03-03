@@ -20,7 +20,7 @@ const [staked, setStaked] = useState([]);
 const [contractRen, setContractRen] = useState([]);
 const [polyContractRen, setPolyContractRen] = useState([]);
 
-//Ren Supply {!loading && renSupply.toFixed()}
+//Ren Supply {!loading && renSupply.toFixed()}  
 
 useEffect(() => {
     async function init() {
