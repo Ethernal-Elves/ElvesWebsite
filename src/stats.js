@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useMoralis } from "react-moralis";
 import {getRENTokenSupply} from "./utils/interact"
-
+import logo from "./media/elf.svg"
 
 
 const actionString = ["unstaked", "staked", "campaign", "passive mode", "idle", "re-rolled weapon", "re-rolled item", "healing", "polygon", "synergize", "bloodthirst"]
@@ -14,6 +14,7 @@ const { Moralis } = useMoralis();
 const [renSupply, setRenSupply] = useState(0);
 const [ownerCount, setOwnerCount] = useState(0);
 const [levelDistribution, setLevelDistribution] = useState([]);
+const [weaponTierDistribution, setWeaponTierDistribution] = useState([]);
 const [actionDistribution, setActionDistribution] = useState([]);
 const [inPolygon, setInPolygon] = useState([]);
 const [staked, setStaked] = useState([]);
@@ -31,10 +32,19 @@ useEffect(() => {
     let polyContractRen = await Moralis.Cloud.run("getPolyContractRen")
     let contractRen = await Moralis.Cloud.run("getContractRen")
     let actions = await Moralis.Cloud.run("getActions")
-    let polyactions = await Moralis.Cloud.run("getPolyActions")
+    
     let staked = await Moralis.Cloud.run("getStaked")
+    
+    let weaponTierDistribution = await Moralis.Cloud.run("weaponTierDistribution")
+    let getPolygonCount = await Moralis.Cloud.run("getPolygonCount")
+        
 
-    console.log(polyactions, "POLYYY")
+
+    weaponTierDistribution.sort(function(a, b) {
+      return a.objectId - b.objectId;
+    });
+
+
 
    // let renSupplyValue = await getRENTokenSupply()
     //setRenSupply(renSupplyValue/1e18)
@@ -92,9 +102,7 @@ useEffect(() => {
         }
         levelTiers.push(tokenCount)
 
-        let comboActions = actions.concat(polyactions)
 
-        console.log(comboActions, "COMBO")
 
         let actionUnstaked = 0
         let actionStaked = 0
@@ -109,16 +117,16 @@ useEffect(() => {
         let actionSynergize = 0
 
 
-        comboActions.map(action => {
+        actions.map(action => {
 
             let actionIndex = parseInt(action.objectId)
 
             if(actionIndex === 0) {
-                actionUnstaked += action.tokens
+                actionIdle += action.tokens
 
             }
             if(actionIndex === 1) {
-                actionStaked += action.tokens
+                actionIdle += action.tokens
             }
             if(actionIndex === 2) {
                 actionCampaign += action.tokens
@@ -150,13 +158,12 @@ useEffect(() => {
 
         })
 
-        let actionArray = [{objectId: 0, tokens: actionUnstaked}, {objectId: 2, tokens: actionCampaign}, {objectId: 3, tokens: actionPassive}, {objectId: 4, tokens: actionIdle}, {objectId: 5, tokens: actionRerollWeapon}, {objectId: 6, tokens: actionRerollItem}, {objectId: 7, tokens: actionHealing}, {objectId: 9, tokens: actionBloodthirst}, {objectId: 10, tokens: actionSynergize}]
-        
-
-  
+        let actionArray = [{objectId: 2, tokens: actionCampaign}, {objectId: 3, tokens: actionPassive}, {objectId: 4, tokens: actionIdle}, {objectId: 5, tokens: actionRerollWeapon}, {objectId: 6, tokens: actionRerollItem}, {objectId: 7, tokens: actionHealing}, {objectId: 9, tokens: actionBloodthirst}, {objectId: 10, tokens: actionSynergize}]
+        let polyCount = getPolygonCount.filter(poly => poly.objectId === "polygon")
+       
         setActionDistribution(actionArray)
-        setInPolygon(actionPolygon)
-
+        setInPolygon(polyCount[0].tokens)
+        setWeaponTierDistribution(weaponTierDistribution)
         setLevelDistribution(levelTiers)
         setOwnerCount(ownerCount.length)
         setStaked(staked)
@@ -179,8 +186,20 @@ useEffect(() => {
 
 
 return (
-<>
+    <>
+<div class="flex">
+    <div class="w-full">
+        <img src={logo} class="h-96" alt="logo" />
+        <p class="pt-2">EthernalElves is a collection of 6666 Sentinel Elves racing to awaken the Elders. With no IPFS or API, these Elves a 100% on-chain. Play EthernalElves to upgrade your abilities and grow your army. !onward
+        </p>
 
+         
+    
+    
+    </div>
+</div>    
+<div class="flex justify-between">
+    <div class="w-1/4">
 <h3>Gameplay Statistics</h3>
 
 <div className="flex text-sm">Individual Holders {ownerCount && ownerCount} </div>
@@ -200,7 +219,9 @@ return (
                         )
                     })}
 
-
+<br/>
+<br/>
+<br/>
 <h3>$REN & CREDITS In Circulation</h3>
 <div className="flex text-sm">
 
@@ -229,8 +250,8 @@ let issued
             })}
 
 
-             
-
+</div>           
+<div class="w-1/4">
 <h3>Current Activity</h3>
              {actionDistribution && actionDistribution.map((level, index) => {
                      const text = actionString[parseInt(level.objectId)]
@@ -238,17 +259,28 @@ let issued
                   <div key={index} className="flex">
                     <div>{text}: {level.tokens} </div>
                    </div> )})}
+                   </div>
 
-
-<h3>Level distribution</h3>
+                   <div class="w-1/4">
+<h3>Level Tier distribution</h3>
              {levelDistribution && levelDistribution.map((level, index) => {
                 return (
                   <div key={index} className="flex">
                     <div>Level Tier{index + 1}: {level}</div>
                    </div> )})}
+                   <br/>
+<br/>
+<br/>
+                   <h3>Weapon Tier  distribution</h3>
+             {weaponTierDistribution && weaponTierDistribution.map((weapon, index) => {
+                return (
+                  <div key={index} className="flex">
+                    <div>Level Tier{weapon.objectId}: {weapon.tokens}</div>
+                   </div> )})}
+                   </div>
 
- </>
-
+ </div>
+</>
 
 
   ) 

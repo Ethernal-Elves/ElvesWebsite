@@ -61,7 +61,8 @@ function App() {
 
      
                 <Route path="/">   
-                <Intro />    
+          
+              
                 <Stats />   
               
                 </Route>
