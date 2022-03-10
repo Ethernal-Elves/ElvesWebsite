@@ -16,6 +16,7 @@ import {app, analytics} from "./initFirebase.js";
 import ImageApp from "./ImageApp.js";
 import Verify from "./Verify.js";
 import Stats from "./stats.js";
+import ExportGame from "./ExportGame.js";
 
 
 
@@ -50,7 +51,7 @@ function App() {
               <Switch>
               <Route path="/beff/">
                 <ImageApp />    
-    
+              <ExportGame />
                 </Route>
                     
 
