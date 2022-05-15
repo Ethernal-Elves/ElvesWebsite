@@ -29,8 +29,6 @@ import team5 from "../assets/images/team/5.jpg"
 import team6 from "../assets/images/team/6.jpg"
 import team7 from "../assets/images/team/7.png"
 
-// import MenuIcon from "../assets/images/menu.png"
-
 import { Carousel } from "react-responsive-carousel";
 import { Transition } from "@headlessui/react";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
