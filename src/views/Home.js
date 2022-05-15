@@ -123,7 +123,7 @@ export const Home = () => {
                             <a className="custom-button min-w-[100px] px-4 py-1 text-center" href="https://app.ethernalelves.com">play</a>
                             <a className="custom-button min-w-[100px] px-4 py-1 text-center" href="#about">about</a>
                             <a className="custom-button min-w-[100px] px-4 py-1 text-center" href="#roadmap" >roadmap</a>
-                            <a className="custom-button min-w-[100px] px-4 py-1 text-center" href="https://app.ethernalelves.com">docs</a>
+                            <a className="custom-button min-w-[100px] px-4 py-1 text-center" href="https://docs.ethernalelves.com/about/storyline">docs</a>
                         </div>
                         <div className="flex items-center lg:gap-3 gap-1">
                             <a href="https://twitter.com" className="w-[45px] h-[45px] rounded-full bg-[#1c130f] border border-[3px] border-[#4f4945] p-1">
