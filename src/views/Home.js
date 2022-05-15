@@ -9,6 +9,7 @@ import prime from "../assets/images/prime.png"
 import dark from "../assets/images/dark.png"
 import wood from "../assets/images/wood.png"
 import ranger1 from "../assets/images/ranger1.png"
+import ranger2 from "../assets/images/ranger.svg"
 import assassin1 from "../assets/images/assassin1.png"
 import druid from "../assets/images/druid.png"
 import borderTop from "../assets/images/border-top.png"
@@ -217,10 +218,10 @@ export const Home = () => {
                                 </a>
 
                                 <a
-                                    href="https://app.ethernalelves.com"
+                                    href="https://docs.ethernalelves.com/about/storyline"
                                     className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-lg font-app font-bold"
                                 >
-                                    Doc
+                                    Docs
                                 </a>
                             </div>
                         </div>
@@ -234,7 +235,7 @@ export const Home = () => {
                         <div className="container mx-auto flex px-5 md:pt-32 pt-12 md:flex-row gap-8 flex-col items-center">
                             <div className="flex flex-col max-w-sm">
                                 <img className="z-[1]" src={borderTop} alt="border-top" />
-                                <img className="object-cover object-center -my-[6px] px-8 bg-black pt-8" alt="hero" src={light} data-xblocker="passed" style={{ visibility: "visible" }} />
+                                <img className="object-cover object-center -my-[6px] px-8 bg-black pt-8" alt="hero" src={ranger2} data-xblocker="passed" style={{ visibility: "visible" }} />
                                 <img className="z-[1]" src={borderBottom} alt="border-top" />
                             </div>
                             <div className="lg:flex-grow lg:w-1/2 lg:pl-24 lg:pl-16 flex flex-col lg:items-start lg:text-left items-center text-center gap-4">
