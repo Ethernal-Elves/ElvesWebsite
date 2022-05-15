@@ -4,6 +4,7 @@ import {
   Route
 } from "react-router-dom";
 import { Home } from "./views/Home";
+import {analytics, app} from './utils/initFirebase'
 
 function App() {
   return (
