@@ -28,6 +28,7 @@ import team4 from "../assets/images/team/4.png"
 import team5 from "../assets/images/team/5.jpg"
 import team6 from "../assets/images/team/6.jpg"
 import team7 from "../assets/images/team/7.png"
+import team8 from "../assets/images/team/8.jpg"
 
 import { Carousel } from "react-responsive-carousel";
 import { Transition } from "@headlessui/react";
@@ -95,15 +96,21 @@ const moderators = [
 const devs = [
     {
         name: "s17a.eth",
-        role:"FrontEnd Dev",
+        role:"Frontend Dev",
         social: "s17a_xyz",
         image: team6
     },
     {
         name: "Dev",
-        role:"FullStack Dev",
+        role:"Fullstack Dev",
         social: "drn2369",
         image: team7
+    },
+    {
+        name: "Ignurof",
+        role:"Fullstack Dev",
+        social: "ignurof",
+        image: team8
     },
 
 ]
@@ -124,17 +131,17 @@ export const Home = () => {
                             <a className="custom-button min-w-[100px] px-4 py-1 text-center" href="https://docs.ethernalelves.com/about/storyline">docs</a>
                         </div>
                         <div className="flex items-center lg:gap-3 gap-1">
-                            <a href="https://twitter.com" className="w-[45px] h-[45px] rounded-full bg-[#1c130f] border border-[3px] border-[#4f4945] p-1">
+                            <a href="https://twitter.com/ethernalelves" className="w-[45px] h-[45px] rounded-full bg-[#1c130f] border border-[3px] border-[#4f4945] p-1">
                                 <img className="bg-white rounded-full p-1" src={twitterImg} alt="twitter" />
                             </a>
-                            <a href="https://discord.com" className="w-[45px] h-[45px] rounded-full bg-[#1c130f] border border-[3px] border-[#4f4945] p-1">
+                            <a href="https://discord.com/invite/ethernalelves" className="w-[45px] h-[45px] rounded-full bg-[#1c130f] border border-[3px] border-[#4f4945] p-1">
                                 <img className="bg-white rounded-full p-1" src={discordImg} alt="discord" />
                             </a>
-                            <a href="https://opensea.io" className="w-[45px] h-[45px] rounded-full bg-[#1c130f] border border-[3px] border-[#4f4945] p-1">
+                            <a href="https://opensea.io/collection/ethernalelves" className="w-[45px] h-[45px] rounded-full bg-[#1c130f] border border-[3px] border-[#4f4945] p-1">
                                 <img className="bg-white rounded-full p-1" src={openseaImg} alt="opensea" />
                             </a>
                             {/* <img className="lg:hidden w-[40px] h-[40px] rounded-sm bg-[#1c130f] border border-[3px] border-[#4f4945] p-1" src={MenuIcon} alt="menu" /> */}
-                            <div className=" flex lg:hidden">
+                            <div className="flex lg:hidden">
                                 <button
                                     onClick={() => setIsOpen(!isOpen)}
                                     type="button"
